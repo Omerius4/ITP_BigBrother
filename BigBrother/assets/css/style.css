@@ -20,6 +20,14 @@ body {
     color: var(--c-body);
 }
 
+body .modal-content {
+    background-color: #fff !important;
+}
+
+.main-content {
+    padding: 40px 24px;
+}
+
 h1, h2, h3,h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: 600;
@@ -316,3 +324,21 @@ footer .line {
     color: white;
 }
 
+/* tasks */
+
+.modal-content {
+    background-color: #fff !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+
+.profile:hover {
+    color: var(--c-dark);
+    background-color: var(--c-brand-light);
+    border-color: var(--c-brand-light);
+}
+
+.logout{
+    color: white;
+}
