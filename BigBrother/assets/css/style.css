@@ -20,6 +20,14 @@ body {
     color: var(--c-body);
 }
 
+body .modal-content {
+    background-color: #fff !important;
+}
+
+.main-content {
+    padding: 40px 24px;
+}
+
 h1, h2, h3,h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: 600;
@@ -316,6 +324,7 @@ footer .line {
     color: white;
 }
 
+HEAD
 
 body.dark-mode {
     background-color: #181818 !important;
@@ -356,4 +365,83 @@ body.dark-mode h5 {
 }
 body.dark-mode .nav-link {
     color: #f8f9fa !important;
+}
+
+/* tasks */
+
+.modal-content {
+    background-color: #fff !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+
+.profile:hover {
+    color: var(--c-dark);
+    background-color: var(--c-brand-light);
+    border-color: var(--c-brand-light);
+}
+
+.logout{
+    color: white;
+}
+
+
+body.dark-mode {
+    background-color: #181818 !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .bg-white {
+    background-color: #232323 !important;
+}
+body.dark-mode .navbar, 
+body.dark-mode .footer, 
+body.dark-mode .theme-shadow {
+    background-color: #232323 !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .text-white {
+    color: #f1f1f1 !important;
+}
+body.dark-mode .btn-brand {
+    background-color: #444 !important;
+    color: #fff !important;
+}
+body.dark-mode .btn-dark {
+    background-color: #fff !important;
+    color: #232323 !important;
+}
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #232323 !important;
+    color: #f1f1f1 !important;
+    border-color: #444 !important;
+}
+body.dark-mode h1 {
+    color: #f8f9fa !important;
+}
+body.dark-mode h5 {
+    color: #f8f9fa !important;
+    
+}
+body.dark-mode .nav-link {
+    color: #f8f9fa !important;
+}
+/* tasks */
+
+.modal-content {
+    background-color: #fff !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+
+.profile:hover {
+    color: var(--c-dark);
+    background-color: var(--c-brand-light);
+    border-color: var(--c-brand-light);
+}
+
+.logout{
+    color: white;
 }
