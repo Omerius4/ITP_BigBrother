@@ -316,3 +316,44 @@ footer .line {
     color: white;
 }
 
+
+body.dark-mode {
+    background-color: #181818 !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .bg-white {
+    background-color: #232323 !important;
+}
+body.dark-mode .navbar, 
+body.dark-mode .footer, 
+body.dark-mode .theme-shadow {
+    background-color: #232323 !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .text-white {
+    color: #f1f1f1 !important;
+}
+body.dark-mode .btn-brand {
+    background-color: #444 !important;
+    color: #fff !important;
+}
+body.dark-mode .btn-dark {
+    background-color: #fff !important;
+    color: #232323 !important;
+}
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #232323 !important;
+    color: #f1f1f1 !important;
+    border-color: #444 !important;
+}
+body.dark-mode h1 {
+    color: #f8f9fa !important;
+}
+body.dark-mode h5 {
+    color: #f8f9fa !important;
+    
+}
+body.dark-mode .nav-link {
+    color: #f8f9fa !important;
+}

@@ -46,3 +46,49 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
+document.getElementById('reminder-box').addEventListener('click', function() {
+        const toast = document.getElementById('reminder-toast');
+        toast.style.display = 'block';
+        document.getElementById('toast-title').textContent = "Are you still studying?";
+        document.getElementById('toast-message').style.display = 'none';
+    });
+
+    document.getElementById('btn-yes').addEventListener('click', function() {
+        const msg = document.getElementById('toast-message');
+        msg.textContent = "GOOD JOB, KEEP IT UP";
+        msg.style.display = 'block';
+        setTimeout(() => {
+           document.getElementById('reminder-toast').style.display = 'none';
+            msg.style.display = 'none';
+       }, 5000);
+    });
+
+    document.getElementById('btn-no').addEventListener('click', function() {
+        const msg = document.getElementById('toast-message');
+        msg.textContent = "THEN GET BACK TO WORK!";
+        msg.style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('reminder-toast').style.display = 'none';
+            msg.style.display = 'none';
+        }, 5000);
+    });
+/* document.getElementById('reminder-box').addEventListener('click', function() {
+    const toast = document.getElementById('reminder-toast');
+    toast.style.display = 'block';
+    document.getElementById('toast-message').style.display = 'none';
+});
+
+document.getElementById('btn-yes').addEventListener('click', function() {
+    document.getElementById('reminder-toast').style.display = 'none';
+});
+
+document.getElementById('btn-no').addEventListener('click', function() {
+    const msg = document.getElementById('toast-message');
+    msg.textContent = "Dann lern weiter bis du fertig bist!!";
+    msg.style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('reminder-toast').style.display = 'none';
+        msg.style.display = 'none';
+    }, 2500);
+}); */
