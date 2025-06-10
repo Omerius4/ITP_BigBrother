@@ -1,9 +1,9 @@
 <?php
-include('../includes/auth.php');
-include('../includes/db.php');
+include('includes/auth.php');
+include('includes/db.php');
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: dashboard.php"  || "Location: edit-subject.php?id=". $subject_id);
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ $stmt->execute([$subject_id, $user_id]);
 $subject = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$subject) {
-    header("Location: dashboard.php" || "Location: edit-subject.php?id=". $subject_id);
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $update = $pdo->prepare("UPDATE subjects SET name = ?, ects = ? WHERE id = ? AND user_id = ?");
         $update->execute([$name, $ects, $subject_id, $user_id]);
 
-        header("Location: dashboard.php" || "Location: edit-subject.php?id=". $subject_id);
+        header("Location: /BigBrother/api/subjects.php");
         exit();
     }
 }

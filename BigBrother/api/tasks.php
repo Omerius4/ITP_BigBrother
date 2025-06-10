@@ -22,20 +22,35 @@ if (isset($_POST['add'])) {
         $stmt = $pdo->prepare("INSERT INTO tasks (user_id, title, deadline) VALUES (?, ?, ?)");
         $stmt->execute([$user_id, $title, $deadline]);
     }
+
 } elseif (isset($_POST['toggle'])) {
     $task_id = (int)($_POST['task_id'] ?? 0);
     $stmt = $pdo->prepare("SELECT is_completed FROM tasks WHERE id = ? AND user_id = ?");
     $stmt->execute([$task_id, $user_id]);
     $task = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if ($task) {
         $newStatus = $task['is_completed'] ? 0 : 1;
         $stmt = $pdo->prepare("UPDATE tasks SET is_completed = ? WHERE id = ? AND user_id = ?");
         $stmt->execute([$newStatus, $task_id, $user_id]);
     }
+
 } elseif (isset($_POST['delete'])) {
     $task_id = (int)($_POST['task_id'] ?? 0);
     $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ? AND user_id = ?");
     $stmt->execute([$task_id, $user_id]);
+
+} elseif (isset($_POST['update'])) {
+    // 🔧 Handle edit/update action
+    $task_id = (int)($_POST['task_id'] ?? 0);
+    $title = trim($_POST['title'] ?? '');
+    $deadline = $_POST['deadline'] ?? '';
+
+    if ($title && $deadline && $task_id) {
+        $stmt = $pdo->prepare("UPDATE tasks SET title = ?, deadline = ? WHERE id = ? AND user_id = ?");
+        $stmt->execute([$title, $deadline, $task_id, $user_id]);
+    }
+
 } else {
     exit('Invalid action');
 }

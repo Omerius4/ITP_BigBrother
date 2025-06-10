@@ -12,14 +12,17 @@ include('includes/nav.php');
                 <div class="col-12">
                     <h1 data-aos="fade-left" class="text-uppercase text-white fw-semibold display-1">Welcome to BigBrother</h1>
                     <h5 class="text-white mt-3 mb-4" data-aos="fade-right">BIGBROTHER IS HERE TO HELP YOU</h5>
-                    <div data-aos="fade-up" data-aos-delay="50">
-                        <a href="login.php" class="btn btn-brand me-2">Login</a>
-                        <a href="register.php" class="btn btn-light ms-2">Register</a>
-                    </div>
+                    <?php if (!isset($_SESSION['user_id'])): ?>
+                        <div data-aos="fade-up" data-aos-delay="50">
+                            <a href="login.php" class="btn btn-brand me-2">Login</a>
+                            <a href="register.php" class="btn btn-light ms-2">Register</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- ABOUT -->
     <section id="about" class="section-padding">
@@ -163,7 +166,7 @@ include('includes/nav.php');
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Senol Aydin</h4>
-                            <p class="mb-0 text-white">Vibing nr.1</p>
+                            <p class="mb-0 text-white">Fronend/Backend-Development</p>
                         </div>
                     </div>
                 </div>
@@ -174,7 +177,7 @@ include('includes/nav.php');
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Alberta Hasi</h4>
-                            <p class="mb-0 text-white">Team Leader</p>
+                            <p class="mb-0 text-white">Team Leader, Frontend/Backend-Development, Design</p>
                         </div>
                     </div>
                 </div>
@@ -185,7 +188,7 @@ include('includes/nav.php');
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Stephan Schlager</h4>
-                            <p class="mb-0 text-white">Vibing nr.2</p>
+                            <p class="mb-0 text-white">Fronend/Backend-Development</p>
                         </div>
                     </div>
                 </div>

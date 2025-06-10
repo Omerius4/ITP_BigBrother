@@ -122,16 +122,12 @@ const translations = {
         // Team Section
         team_title: "Teammitglieder",
         team_text: "Ein junges Entwicklerteam, das die Herausforderungen von Studierenden wirklich versteht",
-        team_omer: "Omer Wahab",
-        team_omer_role: "Backend-Entwicklung",
         team_senol: "Senol Aydin",
-        team_senol_role: "Vibing Nr.1",
+        team_senol_role: "Projekt-Mitglied, Frontend-Entwicklung",
         team_alberta: "Alberta Hasi",
-        team_alberta_role: "Frontend-Entwicklung",
+        team_alberta_role: "Projektleiterin, Frontend/Backend-Entwicklung, Design",
         team_stephan: "Stephan Schlager",
         team_stephan_role: "Frontend & Design",
-        team_roxanna: "Roxanna Kühlmann",
-        team_roxanna_role: "Vibing Nr.3",
 
         // Contact Section
         contact_title: "Kontakt aufnehmen",

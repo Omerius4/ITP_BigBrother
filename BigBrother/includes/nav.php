@@ -38,7 +38,7 @@
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#information">Info</a></li>
                     <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="help.php">Contact</a></li>
                     <li class="nav-item"><a href="/BigBrother/login.php" class="btn btn-brand ms-lg-3">Login</a></li>
                     <li class="nav-item"><a href="/BigBrother/register.php" class="btn btn-brand ms-lg-3">Register</a></li>
                 <?php endif; ?>

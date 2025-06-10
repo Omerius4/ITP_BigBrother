@@ -79,7 +79,7 @@ include('../includes/nav.php');
             <tr>
                 <!-- Status toggle -->
                 <td>
-                    <form method="POST" action="subjects.php" style="display:inline;">
+                    <form method="POST" action="/BigBrother/api/subjects.php" style="display:inline;">
                         <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
                         <button type="submit" name="toggle" class="btn btn-sm <?= $subj['is_completed'] ? 'btn-success' : 'btn-secondary' ?>">
                             <?= $subj['is_completed'] ? "✅ Completed" : "❌ Incomplete" ?>
@@ -94,18 +94,63 @@ include('../includes/nav.php');
                 <td><?= (int)$subj['ects'] ?></td>
 
                 <!-- Actions -->
-                <td class="d-flex gap-2">
+                <td class="d-flex gap-2 align-items-center">
                     <a href="../notes.php?subject_id=<?= $subj['id'] ?>" class="btn btn-primary btn-sm">Add Notes</a>
-                    <a href="/BigBrother/api/edit-subject.php?id=<?= $subj['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                    <form method="POST" action="subjects.php" onsubmit="return confirm('Delete this subject?');">
+                    <a href="/BigBrother/edit-subject.php?id=<?= $subj['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                    <form method="POST" action="subjects.php" onsubmit="return confirm('Delete this subject?');" style="margin:0;">
                         <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
                         <button type="submit" name="delete" class="btn btn-danger btn-sm">Delete</button>
                     </form>
+
+                    <!-- Toggle Notes Button -->
+                    <button type="button" class="btn btn-brand btn-sm toggle-notes-btn" data-subject-id="<?= $subj['id'] ?>">
+                        Notes for this Subject
+                    </button>
                 </td>
             </tr>
+
+            <!-- Hidden notes row -->
+            <tr class="notes-row" id="notes-row-<?= $subj['id'] ?>" style="display:none;">
+                <td colspan="4">
+                    <?php
+                    // Fetch notes for this subject
+                    $stmtNotes = $pdo->prepare("SELECT * FROM notes WHERE subject_id = ? AND user_id = ?");
+                    $stmtNotes->execute([$subj['id'], $user_id]);
+                    $notes = $stmtNotes->fetchAll(PDO::FETCH_ASSOC);
+
+                    if (count($notes) === 0) {
+                        echo "<em>No notes found for this subject.</em>";
+                    } else {
+                        echo "<ul class='list-group'>";
+                        foreach ($notes as $note) {
+                            echo "<li class='list-group-item'>";
+                            echo "<strong>" . htmlspecialchars($note['title']) . "</strong>: ";
+                            echo nl2br(htmlspecialchars($note['content']));
+                            echo "</li>";
+                        }
+                        echo "</ul>";
+                    }
+                    ?>
+                </td>
+            </tr>
+
         <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+<script>
+document.querySelectorAll('.toggle-notes-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const subjectId = button.getAttribute('data-subject-id');
+        const notesRow = document.getElementById(`notes-row-${subjectId}`);
+        if (notesRow.style.display === 'none' || notesRow.style.display === '') {
+            notesRow.style.display = 'table-row';
+        } else {
+            notesRow.style.display = 'none';
+        }
+    });
+});
+</script>
 
 <?php include('../includes/footer.php'); ?>
