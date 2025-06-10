@@ -132,8 +132,114 @@ include('includes/nav.php');
                     </tbody>
                 </table>
             </div>
+
+
+            
+
         </div>
     </div>
+
+    <!-- Schedule Calendar -->
+    <div class="col-12 mb-5">
+        <h2 class="mb-3 text-center">📅 Schedule Calendar</h2>
+        <div id="calendar"></div>
+    </div>
+
+
 </div>
+
+<!-- Add Event Modal -->
+<div class="modal fade" id="event_entry_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Event</h5>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="event_name">Event Name</label>
+          <input type="text" id="event_name" class="form-control" placeholder="Enter your event name">
+        </div>
+        <div class="form-group">
+          <label for="event_start_date">Start Date</label>
+          <input type="date" id="event_start_date" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="event_end_date">End Date</label>
+          <input type="date" id="event_end_date" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="save_event()">Save Event</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    display_events();
+});
+
+function display_events() {
+    var events = [];
+    $.ajax({
+        url: 'api/display_event.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            response.data.forEach(function (item) {
+                events.push({
+                    title: item.event_name,
+                    start: item.event_start_date,
+                    end: item.event_end_date
+                });
+            });
+
+            $('#calendar').fullCalendar({
+                defaultView: 'month',
+                editable: false,
+                selectable: true,
+                selectHelper: true,
+                select: function (start, end) {
+                    $('#event_start_date').val(moment(start).format('YYYY-MM-DD'));
+                    $('#event_end_date').val(moment(end).subtract(1, 'days').format('YYYY-MM-DD'));
+                    $('#event_entry_modal').modal('show');
+                },
+                events: events
+            });
+        }
+    });
+}
+
+function save_event() {
+    const name = $('#event_name').val();
+    const start = $('#event_start_date').val();
+    const end = $('#event_end_date').val();
+
+    if (!name || !start || !end) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    $.ajax({
+        url: 'api/save_event.php',
+        type: 'POST',
+        data: {
+            event_name: name,
+            event_start_date: start,
+            event_end_date: end
+        },
+        success: function (response) {
+            $('#event_entry_modal').modal('hide');
+            alert("Event saved!");
+            location.reload();
+        }
+    });
+}
+</script>
+
+
 
 <?php include('includes/footer.php'); ?>
