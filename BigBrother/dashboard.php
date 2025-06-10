@@ -113,7 +113,7 @@ include('includes/nav.php');
                                 <form method="POST" action="api/subjects.php">
                                     <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
                                     <button type="submit" name="toggle" class="btn btn-sm <?= $subj['is_completed'] ? 'btn-success' : 'btn-secondary' ?>">
-                                        <?= $subj['is_completed'] ? "✅ Completed" : "❌ Incomplete" ?>
+                                        <?= $subj['is_completed'] ? "Finished" : "Started" ?>
                                     </button>
                                 </form>
                             </td>
