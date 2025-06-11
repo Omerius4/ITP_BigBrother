@@ -146,7 +146,87 @@ include('includes/nav.php');
     </div>
 
 
+    <!-- Stressometer Section -->
+    <div class="mb-5">
+        <h2 class="mb-3 text-center">😰 Stressometer</h2>
+        <form class="row g-3 mb-4 justify-content-center" method="POST" action="api/stress.php">
+            <div class="col-md-3">
+                <input type="date" name="date" class="form-control" value="<?= date('Y-m-d') ?>" required>
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="stress_level" class="form-control" min="1" max="10" placeholder="Stress Level (1-10)" required>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="add" class="btn btn-danger w-100">Add Entry</button>
+            </div>
+        </form>
+
+        <div class="text-center mb-3">
+            <button class="btn btn-outline-primary btn-sm me-2" onclick="setStressView('daily')">Täglich</button>
+            <button class="btn btn-outline-primary btn-sm me-2" onclick="setStressView('weekly')">Wöchentlich</button>
+            <button class="btn btn-outline-primary btn-sm" onclick="setStressView('monthly')">Monatlich</button>
+        </div>
+        <canvas id="stressChart" height="100"></canvas>
+    </div>
 </div>
+<!-- Stressometer Chart.js & Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let stressChart;
+let currentView = 'daily';
+
+function setStressView(view) {
+    currentView = view;
+    fetch('api/stress.php?view=' + view)
+        .then(res => res.json())
+        .then(data => {
+            let labels = [];
+            let values = [];
+            if (view === 'daily') {
+                labels = data.map(d => d.date);
+                values = data.map(d => d.stress_level);
+            } else {
+                labels = data.map(d => d.label);
+                values = data.map(d => d.avg_stress);
+            }
+            renderStressChart(labels, values, view);
+        });
+}
+
+function renderStressChart(labels, values, view) {
+    const ctx = document.getElementById('stressChart').getContext('2d');
+    if (stressChart) stressChart.destroy();
+    stressChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: view === 'daily' ? 'Stress Level' : 'Average Stress',
+                data: values,
+                fill: false,
+                borderColor: '#dc3545',
+                backgroundColor: '#dc3545',
+                tension: 0.2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 1,
+                    max: 10,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+}
+
+// Initial laden
+document.addEventListener('DOMContentLoaded', function() {
+    setStressView('daily');
+});
+</script>
 
 <!-- Add Event Modal -->
 <div class="modal fade" id="event_entry_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

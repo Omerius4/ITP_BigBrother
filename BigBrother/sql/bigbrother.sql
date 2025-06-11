@@ -93,7 +93,16 @@ INSERT INTO `news` (`id`, `title`, `content`, `image_path`, `created_at`) VALUES
 
 -- --------------------------------------------------------
 
---
+-- Tabellenstruktur für Tabelle stress_levels
+CREATE TABLE stress_levels (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    stress_level INT NOT NULL, -- z.B. 1-10
+    date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE stress_levels ADD UNIQUE KEY unique_user_date (user_id, date);
 -- Tabellenstruktur für Tabelle `notes`
 --
 
