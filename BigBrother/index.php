@@ -4,31 +4,19 @@ include('includes/db.php');
 include('includes/header.php');
 include('includes/nav.php');
 ?>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BigBrother</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-
-
-
-    <!-- HERO -->
+<!-- HERO -->
     <section id="hero" class="min-vh-100 d-flex align-items-center text-center">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 data-aos="fade-left" data-i18n="hero_title" class="text-uppercase text-white fw-semibold display-1">Welcome to BigBrother</h1>
-                    <h5 class="text-white mt-3 mb-4" data-i18n="hero_subtitle" data-aos="fade-right">BIGBROTHER IS HERE TO HELP YOU</h5>
-                    <div data-aos="fade-up" data-aos-delay="50">
-                        <a href="#" class="btn btn-brand me-2">Login</a>
-                        <a href="#" data-i18n="nav_register" class="btn btn-light ms-2">Register</a>
-                    </div>
+                    <h1 data-aos="fade-left" class="text-uppercase text-white fw-semibold display-1">Welcome to BigBrother</h1>
+                    <h5 class="text-white mt-3 mb-4" data-aos="fade-right">BIGBROTHER IS HERE TO HELP YOU</h5>
+                    <?php if (!isset($_SESSION['user_id'])): ?>
+                        <div data-aos="fade-up" data-aos-delay="50">
+                            <a href="login.php" class="btn btn-brand me-2">Login</a>
+                            <a href="register.php" class="btn btn-light ms-2">Register</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -162,24 +150,13 @@ include('includes/nav.php');
             <div class="row">
                 <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
                     <div class="section-title">
-                        <h1 data-i18n="team_title" class="display-4 fw-semibold">Team Members</h1>
+                        <h1 class="display-4 fw-semibold">Team Members</h1>
                         <div class="line"></div>
-                        <p data-i18n="team_text">A young team of developers who truly understand the struggles of students</p>
+                        <p>A young team of developers who truly understand the struggles of students</p>
                     </div>
                 </div>
             </div>
             <div class="row g-4 text-center">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/placeholder.jpg" alt="">
-                        </div>
-                        <div class="team-member-content">
-                            <h4 class="text-white">Omer Wahab</h4>
-                            <p class="mb-0 text-white">Backend Development</p>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
                     <div class="team-member image-zoom">
                         <div class="image-zoom-wrapper">
@@ -187,7 +164,7 @@ include('includes/nav.php');
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Senol Aydin</h4>
-                            <p class="mb-0 text-white">Vibing nr.1</p>
+                            <p class="mb-0 text-white">Fronend/Backend-Development</p>
                         </div>
                     </div>
                 </div>
@@ -198,7 +175,7 @@ include('includes/nav.php');
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Alberta Hasi</h4>
-                            <p class="mb-0 text-white">Frontend Development</p>
+                            <p class="mb-0 text-white">Team Leader, Frontend/Backend-Development, Design</p>
                         </div>
                     </div>
                 </div>
@@ -209,18 +186,7 @@ include('includes/nav.php');
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Stephan Schlager</h4>
-                            <p class="mb-0 text-white">Frontend & Design</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mx-auto" data-aos="fade-down" data-aos-delay="350">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/placeholder.jpg" alt="">
-                        </div>
-                        <div class="team-member-content">
-                            <h4 class="text-white">Roxanna Kühlmann</h4>
-                            <p class="mb-0 text-white">Vibing nr.3</p>
+                            <p class="mb-0 text-white">Fronend/Backend-Development</p>
                         </div>
                     </div>
                 </div>
@@ -228,45 +194,7 @@ include('includes/nav.php');
         </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section-padding bg-light" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 data-i18n="contact_title" class="display-4 text-white fw-semibold">Get in touch</h1>
-                        <div class="line bg-white"></div>
-                        <p data-i18n="contact_text" class="text-white">Your user experience is just as important to us! If you see any room for improvement, make sure to let us know!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center" data-aos="fade-down" data-aos-delay="250">
-                <div class="col-lg-8">
-                    <form action="#" class="row g-3 p-lg-5 p-4 bg-white theme-shadow">
-                        <div class="form-group col-lg-6">
-                            <input type="text" data-i18n="contact_firstname" class="form-control" placeholder="Enter first name">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <input type="text" class="form-control" placeholder="Enter last name">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <input type="email" class="form-control" placeholder="Enter Email address">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <input type="text" class="form-control" placeholder="Enter subject">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <textarea name="message" rows="5" class="form-control" placeholder="Enter Message"></textarea>
-                        </div>
-                        <div class="form-group col-lg-12 d-grid">
-                            <button class="btn btn-brand">Send Message</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
+<!-- FOOTER -->
 <?php
 include('includes/footer.php');
 ?>
