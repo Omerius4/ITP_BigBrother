@@ -182,11 +182,11 @@ include('includes/nav.php');
                 <div class="col-md-4 mx-auto" data-aos="fade-down" data-aos-delay="350">
                     <div class="team-member image-zoom">
                         <div class="image-zoom-wrapper">
-                            <img src="./assets/images/placeholder.jpg" alt="">
+                            <img src="./assets/images/Stephan.jpg" alt="">
                         </div>
                         <div class="team-member-content">
                             <h4 class="text-white">Stephan Schlager</h4>
-                            <p class="mb-0 text-white">Fronend/Backend-Development</p>
+                            <p class="mb-0 text-white">Frontend/Backend-Development</p>
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,27 @@
 
 <script src="asset/pomodoro.js"></script>
 
+<!-- Kalender Button -->
+<div class="text-center mb-3">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#calendarModal">
+        📅 Kalender anzeigen
+    </button>
+</div>
+
+<!-- Kalender Modal -->
+<div class="modal fade" id="calendarModal" tabindex="-1" aria-labelledby="calendarModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background-color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calendarModalLabel">Deine Deadlines im Kalender</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body">
+        <div id="calendar"></div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- To-Do List Section -->
@@ -103,3 +124,45 @@
                 </tbody>
             </table>
         </div>
+        <?php
+// Tasks für den Kalender als Events vorbereiten
+$calendarTasks = [];
+$stmt = $pdo->prepare("SELECT * FROM tasks WHERE user_id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+foreach ($stmt as $task) {
+    $calendarTasks[] = [
+        'title' => htmlspecialchars($task['title']),
+        'start' => $task['deadline'],
+        'allDay' => true,
+        'color' => $task['is_completed'] ? '#28a745' : '#dc3545'
+    ];
+}
+?>
+<!-- FullCalendar einbinden -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarModal = document.getElementById('calendarModal');
+    var calendarEl = document.getElementById('calendar');
+    var calendar;
+
+    calendarModal.addEventListener('shown.bs.modal', function () {
+        if (!calendar) {
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'de',
+                events: <?= json_encode($calendarTasks) ?>
+            });
+            calendar.render();
+        }
+    });
+
+    calendarModal.addEventListener('hidden.bs.modal', function () {
+        if (calendar) {
+            calendar.destroy();
+            calendar = null;
+        }
+    });
+});
+</script>
