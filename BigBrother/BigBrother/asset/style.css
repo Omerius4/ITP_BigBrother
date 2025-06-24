@@ -1,0 +1,45 @@
+#pomodoro {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #f1f1f1;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#timer {
+  font-size: 64px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+#status {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+#startBtn {
+  padding: 10px 30px;
+  font-size: 18px;
+  border: none;
+  background-color: #198754;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#startBtn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+#cycle {
+  margin-top: 10px;
+  color: #444;
+}

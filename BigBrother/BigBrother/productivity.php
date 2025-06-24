@@ -17,6 +17,8 @@
 
 <script src="asset/pomodoro.js"></script>
 
+</div>
+
 <!-- To-Do List Section -->
     <div class="mb-5">
         <h2 class="mb-3 mt-4 ms-1 text-center">📝 Your To-Do List</h2>
@@ -101,45 +103,3 @@
                 </tbody>
             </table>
         </div>
-        <?php
-// Tasks für den Kalender als Events vorbereiten
-$calendarTasks = [];
-$stmt = $pdo->prepare("SELECT * FROM tasks WHERE user_id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-foreach ($stmt as $task) {
-    $calendarTasks[] = [
-        'title' => htmlspecialchars($task['title']),
-        'start' => $task['deadline'],
-        'allDay' => true,
-        'color' => $task['is_completed'] ? '#28a745' : '#dc3545'
-    ];
-}
-?>
-<!-- FullCalendar einbinden -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarModal = document.getElementById('calendarModal');
-    var calendarEl = document.getElementById('calendar');
-    var calendar;
-
-    calendarModal.addEventListener('shown.bs.modal', function () {
-        if (!calendar) {
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'de',
-                events: <?= json_encode($calendarTasks) ?>
-            });
-            calendar.render();
-        }
-    });
-
-    calendarModal.addEventListener('hidden.bs.modal', function () {
-        if (calendar) {
-            calendar.destroy();
-            calendar = null;
-        }
-    });
-});
-</script>

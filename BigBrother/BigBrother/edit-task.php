@@ -47,7 +47,7 @@ include('includes/nav.php');
         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <form method="POST" class="mb-5">
+    <form method="POST">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input
