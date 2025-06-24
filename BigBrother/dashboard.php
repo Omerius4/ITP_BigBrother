@@ -93,59 +93,67 @@ include('includes/nav.php');
             </form>
 
             <div class="table-responsive">
-                <table class="table table-striped table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Name</th>
-                            <th>ECTS</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $stmt = $pdo->prepare("SELECT * FROM subjects WHERE user_id = ?");
-                        $stmt->execute([$_SESSION['user_id']]);
-                        $stmt = $pdo->prepare("SELECT AVG(grade) AS avg_grade FROM subjects WHERE user_id = ? AND grade IS NOT NULL");
-                        $stmt->execute([$_SESSION['user_id']]);
-                        $avg = $stmt->fetch(PDO::FETCH_ASSOC);
-                        foreach ($stmt as $subj):
-                        ?>
-                        <tr>
-                            <td>
-                                <form method="POST" action="api/subjects.php">
-                                    <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
-                                    <button type="submit" name="toggle" class="btn btn-sm <?= $subj['is_completed'] ? 'btn-success' : 'btn-secondary' ?>">
-                                        <?= $subj['is_completed'] ? "Finished" : "Started" ?>
-                                    </button>
-                                </form>
-                            </td>
-                            <td><?= htmlspecialchars($subj['name']) ?></td>
-                            <td><?= (int)$subj['ects'] ?></td>
-                            <td class="d-flex gap-2">
-                                <a href="notes.php?subject_id=<?= $subj['id'] ?>" class="btn btn-primary btn-sm">Add Notes</a>
-                                <a href="edit-subject.php?id=<?= $subj['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                                <form method="POST" action="api/subjects.php" onsubmit="return confirm('Delete this subject?');">
-                                    <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
-                                    <button type="submit" name="delete" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                        <!-- Durchschnittszeile -->
-                            <tr class="table-info fw-bold">
-                                <td colspan="2" class="text-end">Ø Notendurchschnitt:</td>
-                                <td colspan="2" class="text-start">
-                                    <?= ($avg && $avg['avg_grade'] !== null) ? number_format($avg['avg_grade'], 2) : '—' ?>
-                                </td>
-                            </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-striped table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Name</th>
+                        <th>ECTS</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $user_id = $_SESSION['user_id'];
 
+                    // Get all subjects for this user
+                    $stmtSubjects = $pdo->prepare("SELECT * FROM subjects WHERE user_id = ?");
+                    $stmtSubjects->execute([$user_id]);
+                    $subjects = $stmtSubjects->fetchAll(PDO::FETCH_ASSOC);
 
-            
+                    // Get average grade for this user
+                    $stmtAvg = $pdo->prepare("
+                        SELECT AVG(grade) AS avg_grade 
+                        FROM subject_grades 
+                        WHERE user_id = ? AND grade IS NOT NULL
+                    ");
+                    $stmtAvg->execute([$user_id]);
+                    $avg = $stmtAvg->fetch(PDO::FETCH_ASSOC);
 
+                    foreach ($subjects as $subj):
+                    ?>
+                    <tr>
+                        <td>
+                            <form method="POST" action="api/subjects.php">
+                                <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
+                                <button type="submit" name="toggle" class="btn btn-sm <?= $subj['is_completed'] ? 'btn-success' : 'btn-secondary' ?>">
+                                    <?= $subj['is_completed'] ? "Finished" : "Started" ?>
+                                </button>
+                            </form>
+                        </td>
+                        <td><?= htmlspecialchars($subj['name']) ?></td>
+                        <td><?= (int)$subj['ects'] ?></td>
+                        <td class="d-flex gap-2">
+                            <a href="notes.php?subject_id=<?= $subj['id'] ?>" class="btn btn-primary btn-sm">Add Notes</a>
+                            <a href="edit-subject.php?id=<?= $subj['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                            <form method="POST" action="api/subjects.php" onsubmit="return confirm('Delete this subject?');">
+                                <input type="hidden" name="subject_id" value="<?= $subj['id'] ?>">
+                                <button type="submit" name="delete" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+
+                    <!-- Durchschnittszeile -->
+                    <tr class="table-info fw-bold">
+                        <td colspan="2" class="text-end">Ø Notendurchschnitt:</td>
+                        <td colspan="2" class="text-start">
+                            <?= ($avg && $avg['avg_grade'] !== null) ? number_format($avg['avg_grade'], 2) : '—' ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         </div>
     </div>
 
