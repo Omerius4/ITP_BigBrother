@@ -116,7 +116,7 @@ CREATE TABLE `notes` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `file_path` varchar(255) DEFAULT NULL,
-  `file_type` varchar(50) DEFAULT NULL
+  `file_type` varchar(50) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -195,6 +195,18 @@ INSERT INTO `tasks` (`id`, `user_id`, `title`, `deadline`, `is_completed`) VALUE
 (5, 7, 'cgjkvzukgzhj', '2025-06-05', 0),
 (6, 11, 'make an airplane', '2025-05-02', 1),
 (7, 11, 'tdhateheah', '2025-05-04', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle 'subject_grades'
+CREATE TABLE subject_grades (
+    'id' int(11) NOT NULL,
+    'subject_id' int(11) DEFAULT NULL,
+    'user_id' INT NOT NULL,
+    'grade' DECIMAL(4,2) NOT NULL,
+    'created_at' TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- --------------------------------------------------------
 
@@ -281,6 +293,13 @@ ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id`),
   ADD KEY `tasks_ibfk_1` (`user_id`);
 
+--
+-- Indizes für die Tabelle `subject_grades`
+
+ALTER TABLE `subject_grades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `user_id` (`user_id`);
 --
 -- Indizes für die Tabelle `users`
 --
@@ -381,6 +400,9 @@ ALTER TABLE `subjects`
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
+
+-- --------------------------------------------------------
+ALTER TABLE subjects ADD COLUMN grade DECIMAL(4,2) NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

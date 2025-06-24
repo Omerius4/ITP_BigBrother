@@ -106,6 +106,9 @@ include('includes/nav.php');
                         <?php
                         $stmt = $pdo->prepare("SELECT * FROM subjects WHERE user_id = ?");
                         $stmt->execute([$_SESSION['user_id']]);
+                        $stmt = $pdo->prepare("SELECT AVG(grade) AS avg_grade FROM subjects WHERE user_id = ? AND grade IS NOT NULL");
+                        $stmt->execute([$_SESSION['user_id']]);
+                        $avg = $stmt->fetch(PDO::FETCH_ASSOC);
                         foreach ($stmt as $subj):
                         ?>
                         <tr>
@@ -129,6 +132,13 @@ include('includes/nav.php');
                             </td>
                         </tr>
                         <?php endforeach; ?>
+                        <!-- Durchschnittszeile -->
+                            <tr class="table-info fw-bold">
+                                <td colspan="2" class="text-end">Ø Notendurchschnitt:</td>
+                                <td colspan="2" class="text-start">
+                                    <?= ($avg && $avg['avg_grade'] !== null) ? number_format($avg['avg_grade'], 2) : '—' ?>
+                                </td>
+                            </tr>
                     </tbody>
                 </table>
             </div>

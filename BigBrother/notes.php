@@ -19,6 +19,7 @@ if (!$subject) {
 }
 $subject_name = $subject['name'];
 
+
 // Pre-fill data if editing
 $note_to_edit = null;
 if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
